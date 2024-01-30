@@ -1,14 +1,13 @@
 const express = require("express");
-const colors = require("colors");
 
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send({ message: "welcome to project" });
+  res.send("<h1>hello</h1>");
 });
 
-const PORT = 8080;
+const PORT = 8000;
 
 app.listen(PORT, () => {
-  console.log(`server running on ${PORT}`.bgCyan.white);
+  console.log(`server running on ${PORT}`);
 });
