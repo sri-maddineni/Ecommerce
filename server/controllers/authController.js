@@ -56,8 +56,6 @@ export const registerController = async (req, res) => {
       message: "Registered successfully",
       user,
     });
-
-    
   } catch (error) {
     console.log(error);
     res.status(500).send({
@@ -121,4 +119,11 @@ export const loginController = async (req, res) => {
       error,
     });
   }
+};
+
+export const testController = (req, res) => {
+  res.send({
+    message: "hello world",
+  });
+  console.log("protected route");
 };
