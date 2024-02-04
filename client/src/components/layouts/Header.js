@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { GiShoppingBag } from "react-icons/gi";
 
-export const Header = () => {
+
+ const Header = () => {
   return (
     <>
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -11,7 +11,7 @@ export const Header = () => {
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-      <Link className="navbar-brand" to="/"><GiShoppingBag/> Ecommerce</Link>
+      <Link className="navbar-brand" to="/"><i class="fa-solid fa-bag-shopping"></i> Ecommerce</Link>
       <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
         <li className="nav-item">
           <NavLink className="nav-link active" aria-current="page" to="/">Home</NavLink>
@@ -36,3 +36,5 @@ export const Header = () => {
 </nav></>
   )
 }
+
+export default Header;
