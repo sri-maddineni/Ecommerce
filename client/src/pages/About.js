@@ -3,6 +3,8 @@ import { Layouts } from '../components/layouts/Layouts'
 
 export const About = () => {
   return (
-    <Layouts><h1>About</h1></Layouts>
+    <>
+    <div className="diver">
+      <h1>About page</h1></div></>
   )
 }

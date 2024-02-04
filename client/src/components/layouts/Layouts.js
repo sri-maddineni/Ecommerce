@@ -4,10 +4,8 @@ import { Footer } from './Footer'
 
 export const Layouts = (props) => {
   return (
-   <div>
-    <Header/>
-    <main style={{minHeight:"80vh"}}>{props.children}</main>
-    <Footer/>
-   </div>
+    <div style={{height:"80vh"}}>
+        <h1></h1>
+    </div>
   )
 }
