@@ -5,26 +5,30 @@ import Jwt from "jsonwebtoken";
 
 export const registerController = async (req, res) => {
   try {
-    const { name, email, password, phone, address } = req.body;
+    const { name, email, password, phone, address, answer } = req.body;
 
     if (!name) {
-      return res.send({ error: "Name is required" });
+      return res.send({ message: "Name is required" });
     }
 
     if (!email) {
-      return res.send({ error: "email is required" });
+      return res.send({ message: "email is required" });
     }
 
     if (!password) {
-      return res.send({ error: "password is required" });
+      return res.send({ message: "password is required" });
     }
 
     if (!phone) {
-      return res.send({ error: "phone no is required" });
+      return res.send({ message: "phone no is required" });
     }
 
     if (!address) {
-      return res.send({ error: "address is required" });
+      return res.send({ message: "address is required" });
+    }
+
+    if (!answer) {
+      return res.send({ message: "answer is required" });
     }
 
     //existing user checking
@@ -33,7 +37,7 @@ export const registerController = async (req, res) => {
 
     if (existingUser) {
       return res.status.send({
-        success: true,
+        success: false,
         message: "Already registered please login",
       });
     }
@@ -49,6 +53,7 @@ export const registerController = async (req, res) => {
       phone,
       address,
       password: hashedPassword,
+      answer
     }).save();
 
     res.status(201).send({
@@ -108,11 +113,17 @@ export const loginController = async (req, res) => {
       message: "login success",
       user: {
         name: user.name,
+        _id: user._id,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        role:user.role
       },
-      token,
+      token
     });
   } catch (error) {
     console.log(error);
+    console.log("500 error")
     res.status(500).send({
       success: false,
       message: "error in login",
@@ -120,6 +131,53 @@ export const loginController = async (req, res) => {
     });
   }
 };
+
+//forgor password controller
+
+export const forgotPasswordController = async (req, res) => {
+  try {
+    const { email, answer, newPassword } = req.body;
+
+    if (!email) {
+      res.status(400).send({ message: "Email is required" });
+    }
+
+    if (!answer) {
+      res.status(400).send({ message: "answer is required" });
+    }
+
+    if (!newPassword) {
+      res.status(400).send({ message: "newPassword is required" });
+    }
+
+    //check email and answer
+
+    const user = await userModel.findOne({ email, answer })
+
+    //validation
+    if (!user) {
+      return res.status(404).send({
+        success: false,
+        message: "Wrong email or answer"
+      })
+    }
+
+    const hashed = await hashPassword(newPassword)
+    await userModel.findByIdAndUpdate(user._id, { password: hashed })
+    res.status(200).send({
+      success: "true",
+      message: "Password reset success!"
+    })
+
+  } catch (error) {
+    console.log(error)
+    res.status(500).send({
+      success: false,
+      message: "Something went wrong",
+      error
+    })
+  }
+}
 
 export const testController = (req, res) => {
   res.send({
