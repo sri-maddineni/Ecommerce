@@ -2,8 +2,10 @@ import React from 'react'
 import Footer from '../../components/layouts/Footer'
 import Header from '../../components/layouts/Header'
 import AdminMenu from '../../components/layouts/AdminMenu'
-
+import { useContext } from 'react'
+import AuthContext from '../../context/AuthContext'
 const AdminDashboard = () => {
+    const [auth]=useContext(AuthContext);
     return (
         <>
             <Header />
@@ -13,8 +15,9 @@ const AdminDashboard = () => {
                         <AdminMenu />
                     </div>
                     <div className="col-md-9">
-                        <div className="card">
-                            <h1>{}</h1>
+                        <div className="card w-75 p-3">
+                            <h3>Admin name: {auth?.user?.name}</h3>
+                            <h3>Admin email: {auth?.user?.email}</h3>
                         </div>
                     </div>
 
